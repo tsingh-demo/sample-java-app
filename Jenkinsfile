@@ -5,7 +5,7 @@
             container('maven') {
                 stage('Build a Maven project') {
                     sh 'ls -ltra'
-                    sh 'mvn -B -ntp clean install'
+                    sh 'mvn clean package'
                 }
             }
         }
