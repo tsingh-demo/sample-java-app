@@ -1,7 +1,12 @@
-podTemplate {
+ podTemplate(containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true)]) {
     node(POD_LABEL) {
-        stage('Run shell') {
-            sh 'echo hello world'
+        stage('Get a Maven project') {
+            git 'https://github.com/jenkinsci/kubernetes-plugin.git'
+            container('maven') {
+                stage('Build a Maven project') {
+                sh 'mvn -B -ntp clean install'
+                }
+            }
         }
     }
 }
