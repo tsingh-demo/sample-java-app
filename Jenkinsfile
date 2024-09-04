@@ -1,7 +1,7 @@
 podTemplate(containers: [
     containerTemplate(
         name: 'maven', 
-        image: 'maven:3.9.6'
+        image: 'maven:latest'
         )
   ]) {
 
