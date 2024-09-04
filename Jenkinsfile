@@ -10,7 +10,7 @@ podTemplate(containers: [
 
     node(POD_LABEL) {
         stage('Get a Maven project') {
-            container('git') {
+            container('maven') {
                     sh '''
                     echo "git checkout"
                     '''
@@ -18,7 +18,7 @@ podTemplate(containers: [
         }
 
         stage('Build the code') {
-            container('git') {
+            container('maven') {
                     sh '''
                     echo "Go Build"
                     '''
