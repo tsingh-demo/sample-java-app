@@ -23,7 +23,7 @@ podTemplate(containers: [
                 steps {
                     container('ubuntu') {
                         sh 'apt-get update && apt-get install -y git'  // Install Git if necessary
-                        git branch: 'main', url: 'https://github.com/your-repo/your-project.git'
+                        git branch: 'main', url: 'https://github.com/tsingh-PIP/sample-java-app.git'
                     }
                 }
             }
