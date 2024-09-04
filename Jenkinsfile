@@ -2,24 +2,28 @@ podTemplate(containers: [
     containerTemplate(
         name: 'maven', 
         image: 'maven:3.9.6'
-        )
+        ),
+    containerTemplate(
+        name: 'git', 
+        image: 'alpine/git:latest',)
   ]) {
 
     node(POD_LABEL) {
-        stage('Checkout') {
-            container('jnlp') {
+        stage('Get a Maven project') {
+            container('git') {
                     sh '''
-                    echo "Checkout"
+                    echo "git checkout"
                     '''
             }
         }
 
-        stage('Build') {
+        stage('Build the code') {
             container('maven') {
                     sh '''
                     echo "Go Build"
                     '''
             }
         }
+
     }
 }
