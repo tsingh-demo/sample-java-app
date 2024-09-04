@@ -4,7 +4,8 @@
             git 'https://github.com/jenkinsci/kubernetes-plugin.git'
             container('maven') {
                 stage('Build a Maven project') {
-                sh 'mvn -B -ntp clean install'
+                    sh 'ls -ltra'
+                    sh 'mvn -B -ntp clean install'
                 }
             }
         }
