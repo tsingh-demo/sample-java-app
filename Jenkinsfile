@@ -1,12 +1,12 @@
 podTemplate(containers: [
     containerTemplate(
-        name: 'maven', 
-        image: 'maven:latest'
+        name: 'ubuntu', 
+        image: 'ubuntu:latest'
         )
   ]) {
 
     node(POD_LABEL) {
-        stage('Get a Maven project') {
+        stage("Checkout") {
             steps {
                     sh '''
                      git clone https://github.com/tsingh-PIP/sample-java-app.git
@@ -14,9 +14,9 @@ podTemplate(containers: [
             }
         }
 
-        stage('Build the code') {
+        stage("Build") {
             steps {
-                container('maven') {
+                container("ubuntu") {
                         sh '''
                         echo "Go Build"
                         '''
