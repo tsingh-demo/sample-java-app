@@ -1,28 +1,42 @@
-podTemplate(containers: [
-    containerTemplate(
-        name: 'ubuntu', 
-        image: 'ubuntu:latest'
-        )
-  ]) {
-
-    node(POD_LABEL) {
-        stage("Checkout") {
-            steps {
-                    sh '''
-                     git clone https://github.com/tsingh-PIP/sample-java-app.git
-                    '''
-            }
+pipeline {
+    agent {
+        kubernetes {
+            podTemplate(containers: [
+                containerTemplate(
+                    name: 'ubuntu', 
+                    image: 'ubuntu:latest', 
+                    ttyEnabled: true, 
+                    command: 'cat'
+                ),
+                containerTemplate(
+                    name: 'maven', 
+                    image: 'maven:3.8.4-openjdk-11', 
+                    ttyEnabled: true, 
+                    command: 'cat'
+                )
+            ]) 
         }
-
-        stage("Build") {
+    }
+    stages {
+        stage('Checkout') {
             steps {
-                container("ubuntu") {
-                        sh '''
-                        echo "Go Build"
-                        '''
+                container('ubuntu') {
+                    sh 'apt-get update && apt-get install -y git'  // Install Git if necessary
+                    git branch: 'main', url: 'https://github.com/your-repo/your-project.git'
                 }
             }
         }
-
+        stage('Maven Build') {
+            steps {
+                container('maven') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
