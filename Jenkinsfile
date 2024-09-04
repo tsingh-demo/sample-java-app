@@ -5,7 +5,7 @@ podTemplate(containers: [
         ),
     containerTemplate(
         name: 'git', 
-        image: 'bitnami/git',)
+        image: 'java-app',)
   ]) {
 
     node(POD_LABEL) {

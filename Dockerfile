@@ -1,4 +1,6 @@
-FROM openjdk:8
-COPY target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar app.jar
-EXPOSE 8888
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM maven:3.9.6
+
+RUN apt-get -y update
+RUN apt-get -y install git
+
+ENTRYPOINT [ "/bin/sh" ]
