@@ -11,13 +11,9 @@ podTemplate(containers: [
         command: 'cat',
         ttyEnabled: true
     )
-]) {
-    pipeline {
-        agent {
-            kubernetes {
-                label 'mypod'
-            }
-        }
+]) 
+{
+   node(POD_LABEL) {
         stages {
             stage('Checkout') {
                 steps {
