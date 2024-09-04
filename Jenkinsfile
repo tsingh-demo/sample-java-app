@@ -9,18 +9,18 @@ podTemplate(containers: [
         stage('Get a Maven project') {
             container('maven') {
                     sh '''
-                    echo "git checkout"
+                    mvn clean package
                     '''
             }
         }
 
-        stage('Build the code') {
+        /*stage('Build the code') {
             container('maven') {
                     sh '''
                     echo "Go Build"
                     '''
             }
-        }
+        }*/
 
     }
 }
