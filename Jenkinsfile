@@ -6,6 +6,7 @@
                 stage('Build a Maven project') {
                     sh 'ls -ltra'
                     sh 'mvn clean package'
+                    sh 'ls -ltra target/'
                 }
             }
         }
