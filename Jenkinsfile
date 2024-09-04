@@ -2,15 +2,12 @@ podTemplate(containers: [
     containerTemplate(
         name: 'maven', 
         image: 'maven:3.9.6'
-        ),
-    containerTemplate(
-        name: 'git', 
-        image: 'java-app')
+        )
   ]) {
 
     node(POD_LABEL) {
         stage('Get a Maven project') {
-            container('git') {
+            container('maven') {
                     sh '''
                     echo "git checkout"
                     '''
