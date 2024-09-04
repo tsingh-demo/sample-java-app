@@ -7,20 +7,22 @@ podTemplate(containers: [
 
     node(POD_LABEL) {
         stage('Get a Maven project') {
-            container('maven') {
+            steps {
                     sh '''
-                    mvn clean package
+                     git clone https://github.com/tsingh-PIP/sample-java-app.git
                     '''
             }
         }
 
-        /*stage('Build the code') {
-            container('maven') {
-                    sh '''
-                    echo "Go Build"
-                    '''
+        stage('Build the code') {
+            steps {
+                container('maven') {
+                        sh '''
+                        echo "Go Build"
+                        '''
+                }
             }
-        }*/
+        }
 
     }
 }
