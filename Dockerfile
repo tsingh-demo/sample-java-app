@@ -1,4 +1,4 @@
-FROM maven:3.9.6
+FROM ubuntu
 
 RUN apt-get -y update
 RUN apt-get -y install git
