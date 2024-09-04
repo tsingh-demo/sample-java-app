@@ -1,42 +1,44 @@
-pipeline {
-    agent {
-        kubernetes {
-            podTemplate(containers: [
-                containerTemplate(
-                    name: 'ubuntu', 
-                    image: 'ubuntu:latest', 
-                    ttyEnabled: true, 
-                    command: 'cat'
-                ),
-                containerTemplate(
-                    name: 'maven', 
-                    image: 'maven:3.8.4-openjdk-11', 
-                    ttyEnabled: true, 
-                    command: 'cat'
-                )
-            ]) 
+podTemplate(containers: [
+    containerTemplate(
+        name: 'ubuntu',
+        image: 'ubuntu:latest',
+        command: 'cat',
+        ttyEnabled: true
+    ),
+    containerTemplate(
+        name: 'maven',
+        image: 'maven:3.8.4-openjdk-11',
+        command: 'cat',
+        ttyEnabled: true
+    )
+]) {
+    pipeline {
+        agent {
+            kubernetes {
+                label 'mypod'
+            }
         }
-    }
-    stages {
-        stage('Checkout') {
-            steps {
-                container('ubuntu') {
-                    sh 'apt-get update && apt-get install -y git'  // Install Git if necessary
-                    git branch: 'main', url: 'https://github.com/your-repo/your-project.git'
+        stages {
+            stage('Checkout') {
+                steps {
+                    container('ubuntu') {
+                        sh 'apt-get update && apt-get install -y git'  // Install Git if necessary
+                        git branch: 'main', url: 'https://github.com/your-repo/your-project.git'
+                    }
+                }
+            }
+            stage('Maven Build') {
+                steps {
+                    container('maven') {
+                        sh 'mvn clean install'
+                    }
                 }
             }
         }
-        stage('Maven Build') {
-            steps {
-                container('maven') {
-                    sh 'mvn clean install'
-                }
+        post {
+            always {
+                cleanWs()
             }
-        }
-    }
-    post {
-        always {
-            cleanWs()
         }
     }
 }
