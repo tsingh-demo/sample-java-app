@@ -18,7 +18,7 @@ podTemplate(containers: [
         }
 
         stage('Build the code') {
-            container('maven') {
+            container('git') {
                     sh '''
                     echo "Go Build"
                     '''
