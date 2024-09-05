@@ -12,7 +12,7 @@
             container('maven') {
                 stage('Build a Maven project') {
                     sh 'ls -ltr'
-                    sh 'mvn clean test'
+                    sh 'mvn clean install'
                     sh 'ls -ltra target/'
                 }
             }
@@ -28,9 +28,11 @@
         }
         stage('Publish Surefire Report') {
             publishHTML([
-                reportDir: 'target/site',
-                reportFiles: 'surefire-report.html',
-                reportName: 'Surefire Test Report'
+                reportDir: 'target/surefire-reports',  // Correct directory
+                reportFiles: 'surefire-report.html',  // HTML report file
+                reportName: 'Surefire Test Report',   // Name of the report in Jenkins
+                keepAll: true,
+                alwaysLinkToLastBuild: true
             ])
         }
         /*stage('Upload to S3') {
