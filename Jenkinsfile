@@ -12,7 +12,7 @@
             container('maven') {
                 stage('Build a Maven project') {
                     sh 'ls -ltr'
-                    sh 'mvn clean install'
+                    sh 'mvn clean verify'
                     sh 'ls -ltra target/'
                 }
             }
@@ -25,6 +25,15 @@
               path: ''
               )
           }
+        }
+        stage('Publish JaCoCo Report') {
+            jacoco(
+                execPattern: 'target/jacoco.exec',
+                classPattern: 'target/classes',
+                sourcePattern: 'src/main/java',
+                inclusionPattern: '**/*.java',
+                exclusionPattern: ''
+            )
         }
         stage('Publish Surefire Report') {
             publishHTML([
