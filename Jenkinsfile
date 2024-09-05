@@ -21,7 +21,7 @@
             withAWS(credentials:'aws-s3-upload', region:'eu-west-2') {
             s3Upload(
               file: "target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar",
-              bucket: ${env.S3_BUCKET},
+              bucket: 'td-sample-java-app',
               path: '/'
               )
           }
