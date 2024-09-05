@@ -17,17 +17,25 @@
                 }
             }
         }
-        stage('Upload to S3') {
+        stage('Artifacts Upload'){
+            withAWS(credentials:'aws-s3-upload', region:'eu-west-2') {
+            s3Upload(
+              file: "target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar",
+              bucket: '${env.S3_BUCKET}',
+              path: '/'
+              )
+          }
+        }
+        /*stage('Upload to S3') {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
                 credentialsId: "aws-s3-upload",
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                AWS_REGION="us-west-2"
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]) {  // Replace with your AWS Credentials ID
                 s3Upload(file: 'target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', bucket: "${env.S3_BUCKET}", path: "/")
             }
-        }
+        }*/
 
         /*stage('SonarCloud Analysis') {
             withSonarQubeEnv('SonarCloud') {  // The name you gave the SonarQube instance in Jenkins settings
