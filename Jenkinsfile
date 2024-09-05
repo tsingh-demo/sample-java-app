@@ -22,9 +22,10 @@
                 $class: 'AmazonWebServicesCredentialsBinding',
                 credentialsId: "aws-s3-upload",
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
+                AWS_REGION="us-west-2"
             ]]) {  // Replace with your AWS Credentials ID
-                s3Upload(file: 'target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', bucket: "${env.S3_BUCKET}")
+                s3Upload(file: 'target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', bucket: "${env.S3_BUCKET}", path: "/")
             }
         }
 
