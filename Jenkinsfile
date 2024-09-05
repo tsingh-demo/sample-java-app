@@ -18,7 +18,7 @@
             }
         }
         stage('Upload to S3') {
-            withAWS(region: "${AWS_REGION}", credentials: 'aws-s3-upload') {  // Replace with your AWS Credentials ID
+            withAWS(credentials: 'aws-s3-upload') {  // Replace with your AWS Credentials ID
                 s3Upload(file: 'target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', bucket: "${S3_BUCKET}", path: 'artifacts/')
             }
         }
