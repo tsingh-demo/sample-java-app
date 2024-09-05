@@ -3,6 +3,7 @@
     environment {
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
         S3_BUCKET = 'td-sample-java-app'
+        AWS_REGION = 'us-west-2'
     }
 
     node(POD_LABEL) {
