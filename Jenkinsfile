@@ -26,6 +26,15 @@
               )
           }
         }
+        stage('Publish Surefire Report') {
+            steps {
+                publishHTML([
+                    reportDir: 'target/site',
+                    reportFiles: 'surefire-report.html',
+                    reportName: 'Surefire Test Report'
+                ])
+            }
+        }
         /*stage('Upload to S3') {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
