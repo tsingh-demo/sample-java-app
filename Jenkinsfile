@@ -12,7 +12,7 @@
             container('maven') {
                 stage('Build a Maven project') {
                     sh 'ls -ltr'
-                    sh 'mvn clean package'
+                    sh 'mvn clean test'
                     sh 'ls -ltra target/'
                 }
             }
