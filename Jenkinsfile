@@ -2,6 +2,7 @@
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
+        S3_BUCKET = 'td-sample-java-app'
     }
 
     node(POD_LABEL) {
@@ -15,7 +16,13 @@
                 }
             }
         }
-        stage('SonarCloud Analysis') {
+        stage('Upload to S3') {
+            withAWS(region: "${AWS_REGION}", credentials: 'aws-s3-upload') {  // Replace with your AWS Credentials ID
+                s3Upload(file: 'target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar', bucket: "${S3_BUCKET}", path: 'artifacts/')
+            }
+        }
+
+        /*stage('SonarCloud Analysis') {
             withSonarQubeEnv('SonarCloud') {  // The name you gave the SonarQube instance in Jenkins settings
                 sh """
                 mvn sonar:sonar \
@@ -32,6 +39,6 @@
             timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
             }
-        }
+        }*/
     }
 }
