@@ -49,8 +49,8 @@
         }
         stage('Push Docker Image') {
             script {
-                docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                    docker.image("${IMAGE_NAME}:latest").push('latest')
+                docker.withRegistry("https://"${DOCKER_REGISTRY}, ${DOCKER_CREDENTIALS_ID}) {
+                    docker.image(${IMAGE_NAME}":latest").push('latest')
                 }
             }
         }
