@@ -49,7 +49,7 @@
         }
         stage('Push Docker Image') {
             script {
-                docker.withRegistry("https://${env.DOCKER_REGISTRY}", "${env.DOCKER_CREDENTIALS_ID}") {
+                docker.withRegistry("https://${env.DOCKER_REGISTRY}", 'docker-login') {
                         docker.image("${env.IMAGE_NAME}").push('latest')
                 }
             }
