@@ -49,8 +49,8 @@
         }
         stage('Push Docker Image') {
             script {
-                docker.withRegistry("https://${env.DOCKER_REGISTRY}", 'docker-login') {
-                        docker.image("${env.IMAGE_NAME}").push('latest')
+                docker.withRegistry('https://docker.io', 'docker-login') {
+                        docker.image('sample-java-app:latest').push('latest')
                 }
             }
         }
