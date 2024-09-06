@@ -6,7 +6,7 @@
         AWS_REGION = 'us-west-2'
         DOCKER_CREDENTIALS_ID = 'docker-login' // ID of Docker credentials in Jenkins
         DOCKER_REGISTRY = 'https://hub.docker.com/' // E.g., 'docker.io' or your private registry URL
-        IMAGE_NAME = 'sample-java-app' // Docker image name
+        IMAGE_NAME = 'sample-java-app:latest' // Docker image name
     }
 
     node(POD_LABEL) {
@@ -49,8 +49,8 @@
         }
         stage('Push Docker Image') {
             script {
-                docker.withRegistry('https://${env.DOCKER_REGISTRY}', '${env.DOCKER_CREDENTIALS_ID}') {
-                    docker.image('${env.IMAGE_NAME}:latest').push('latest')
+                docker.withRegistry(${env.DOCKER_REGISTRY}, ${env.DOCKER_CREDENTIALS_ID}) {
+                    docker.image(${env.IMAGE_NAME}).push('latest')
                 }
             }
         }
