@@ -47,6 +47,11 @@
                 alwaysLinkToLastBuild: true
             ])
         }
+        stage('Build Docker Image') {
+            script {
+                docker.build('sample-java-app:latest')
+            }
+        }
         stage('Push Docker Image') {
             script {
                 docker.withRegistry('https://docker.io', 'docker-login') {
