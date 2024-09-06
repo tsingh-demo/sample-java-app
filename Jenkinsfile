@@ -4,6 +4,9 @@
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
         S3_BUCKET = 'td-sample-java-app'
         AWS_REGION = 'us-west-2'
+        DOCKER_CREDENTIALS_ID = 'docker-login' // ID of Docker credentials in Jenkins
+        DOCKER_REGISTRY = 'https://hub.docker.com/' // E.g., 'docker.io' or your private registry URL
+        IMAGE_NAME = 'sample-java-app' // Docker image name
     }
 
     node(POD_LABEL) {
@@ -44,6 +47,12 @@
                 alwaysLinkToLastBuild: true
             ])
         }
+        stage('Push Docker Image') {
+            script {
+                docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
+                    docker.image("${IMAGE_NAME}:latest").push('latest')
+                }
+            }
         /*stage('Upload to S3') {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
