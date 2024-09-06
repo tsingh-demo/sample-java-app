@@ -1,4 +1,4 @@
- podTemplate(containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true)]) {
+ podTemplate(containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true),[containerTemplate(image: 'docker:20.10.7', name: 'docker', command: 'cat', ttyEnabled: true)]) {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
@@ -48,14 +48,18 @@
             ])
         }
         stage('Build Docker Image') {
-            script {
-                docker.build('sample-java-app:latest')
+            container('docker'){
+                script {
+                    docker.build('sample-java-app:latest')
+                }
             }
         }
         stage('Push Docker Image') {
-            script {
-                docker.withRegistry('https://docker.io', 'docker-login') {
-                        docker.image('sample-java-app:latest').push('latest')
+            container('docker'){
+                script {
+                    docker.withRegistry('https://docker.io', 'docker-login') {
+                            docker.image('sample-java-app:latest').push('latest')
+                    }
                 }
             }
         }
