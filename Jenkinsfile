@@ -53,6 +53,7 @@
                     docker.image("${IMAGE_NAME}:latest").push('latest')
                 }
             }
+        }
         /*stage('Upload to S3') {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
