@@ -1,4 +1,7 @@
- podTemplate(containers: [containerTemplate(image: 'maven', name: 'maven', command: 'cat', ttyEnabled: true)],[containerTemplate(image: 'docker:20.10.7', name: 'docker', command: 'cat', ttyEnabled: true)]) {
+podTemplate(containers: [
+    containerTemplate(name: 'maven', image: 'maven', command: 'cat', ttyEnabled: true),
+    containerTemplate(name: 'docker', image: 'docker:20.10.7', command: 'cat', ttyEnabled: true)
+]) {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
