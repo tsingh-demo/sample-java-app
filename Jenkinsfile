@@ -1,6 +1,6 @@
 podTemplate(containers: [
     containerTemplate(name: 'maven', image: 'maven', command: 'cat', ttyEnabled: true),
-    containerTemplate(name: 'docker', image: 'docker:20.10.7', command: 'cat', ttyEnabled: true)
+    containerTemplate(name: 'docker', image: 'docker:20.10.7-dind', command: 'dockerd-entrypoint.sh', ttyEnabled: true, privileged: true)
 ]) {
 
     environment {
