@@ -50,7 +50,7 @@ podTemplate(containers: [
                 alwaysLinkToLastBuild: true
             ])
         }
-        stage('Build Docker Image') {
+        /*stage('Build Docker Image') {
             container('docker'){
                 script {
                     docker.build('sample-java-app:latest')
@@ -65,7 +65,7 @@ podTemplate(containers: [
                     }
                 }
             }
-        }
+        }*/
         /*stage('Upload to S3') {
             withCredentials([[
                 $class: 'AmazonWebServicesCredentialsBinding',
@@ -77,19 +77,18 @@ podTemplate(containers: [
             }
         }*/
 
-        /*stage('SonarCloud Analysis') {
+        stage('SonarQube Analysis') {
             withSonarQubeEnv('SonarCloud') {  // The name you gave the SonarQube instance in Jenkins settings
                 sh """
                 mvn sonar:sonar \
-                    -Dsonar.projectKey=tsingh-PIP_sample-java-app \
-                    -Dsonar.organization=tsingh-PIP \
-                    -Dsonar.host.url=https://sonarcloud.io \
+                    -Dsonar.projectKey=sample-java-code \
+                    -Dsonar.host.url=http://localhost:9000 \
                     -Dsonar.login=${env.SONAR_TOKEN}
                 """
             }
         }
 
-        stage("Quality Gate") {
+        /*stage("Quality Gate") {
             // Wait for SonarCloud to complete analysis
             timeout(time: 5, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
