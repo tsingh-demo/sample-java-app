@@ -12,9 +12,9 @@ pipeline {
             - cat
             tty: true
           - name: docker
-            image: docker:latest
+            image: docker:19.03
             command:
-            - cat
+            - dockerd-entrypoint.sh
             tty: true
             volumeMounts:
              - mountPath: /var/run/docker.sock
