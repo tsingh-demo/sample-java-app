@@ -1,14 +1,14 @@
 podTemplate(containers: [
     containerTemplate(name: 'maven', image: 'maven', command: 'cat', ttyEnabled: true),
-    //containerTemplate(name: 'docker', image: 'docker:20.10.7-dind', command: 'dockerd-entrypoint.sh', ttyEnabled: true, privileged: true),
-    containerTemplate(name: 'docker', image: 'docker:19.03', command: 'dockerd-entrypoint.sh', ttyEnabled: true, privileged: true,
-                    volumeMounts: [
-                        volumeMount(mountPath: '/var/run/docker.sock', name: 'docker-sock')
+    containerTemplate(name: 'docker', image: 'docker:19.03', command: 'dockerd-entrypoint.sh', ttyEnabled: true, privileged: true, volumeMounts: [
+                        // Directly define the volume mount here
+                        [mountPath: '/var/run/docker.sock', name: 'docker-sock']
                     ]
                 )
             ], volumes: [
-                volume(name: 'docker-sock', hostPath: [path: '/var/run/docker.sock'])
-]) {
+                // Define the volume using the correct syntax
+                [name: 'docker-sock', hostPath: [path: '/var/run/docker.sock']]
+            ]) {
 
     environment {
         SONAR_TOKEN = credentials('sonarqube-jenkins')  // Use the SonarCloud token
