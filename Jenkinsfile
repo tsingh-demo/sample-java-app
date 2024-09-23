@@ -1,7 +1,7 @@
 podTemplate(containers: [
     containerTemplate(name: 'maven', image: 'maven', command: 'cat', ttyEnabled: true),
     //containerTemplate(name: 'docker', image: 'docker:20.10.7-dind', command: 'dockerd-entrypoint.sh', ttyEnabled: true, privileged: true),
-    containerTemplate(name: 'docker', image: 'docker:docker:19.03', ttyEnabled: true, privileged: true, volumeMounts: [ volumeMount(mountPath: '/var/run/docker.sock', name: 'docker-sock')])
+    containerTemplate(name: 'docker', image: 'docker:docker:19.03', ttyEnabled: true, privileged: true, volumeMounts: [mountPath: '/var/run/docker.sock', name: 'docker-sock'])
 ], volumes: [
     // Define the volumes here
     volume(name: 'docker-sock', hostPath(path: '/var/run/docker.sock'))
