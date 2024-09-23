@@ -4,7 +4,7 @@ podTemplate(containers: [
     containerTemplate(name: 'docker', image: 'docker:docker:19.03', ttyEnabled: true, privileged: true, volumeMounts: [mountPath: '/var/run/docker.sock', name: 'docker-sock'])
 ], volumes: [
     // Define the volumes here
-    volume(name: 'docker-sock', hostPath[path: '/var/run/docker.sock'])
+    volume(name: 'docker-sock', hostPath: [path: '/var/run/docker.sock'])
 ]) {
 
     environment {
