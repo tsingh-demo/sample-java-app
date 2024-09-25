@@ -92,12 +92,14 @@ pipeline {
         }*/
 
         stage('Artifacts Upload'){
+          steps{
             withAWS(credentials:'aws_keys', region:'us-west-2') {
             s3Upload(
               file: "target/*.jar",
               bucket: 'td-sample-java-app',
               path: ''
               )
+            }
           }
         }
 
