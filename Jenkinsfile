@@ -15,15 +15,21 @@ pipeline {
                 volumeMounts:
                 - name: maven-cache
                   mountPath: /root/.m2
+                - name: shared-workspace
+                  mountPath: /workspace  # Mounting shared path in Maven container
               - name: docker
                 image: docker:20.10.8
                 command:
                 - cat
                 tty: true
                 volumeMounts:
+                - name: shared-workspace
+                  mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
                   mountPath: /var/run/docker.sock
               volumes:
+              - name: shared-workspace
+                emptyDir: {}  # An empty directory for sharing data between containers
               - name: maven-cache
                 emptyDir: {}
               - name: docker-sock
@@ -53,6 +59,7 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn clean install'
+                    sh 'cp target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar
                 }
             }
         }

@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Copy the JAR file from the build stage
-COPY --from=build /app/target/*.jar /app/sample-java-app.jar
+COPY target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar /app/sample-java-app.jar
 
 # Set the command to run the application
 ENTRYPOINT ["java", "-jar", "/app/sample-java-app.jar"]
