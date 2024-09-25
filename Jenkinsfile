@@ -126,14 +126,9 @@ pipeline {
 
         stage('Deploy to Cloud') {
             steps {
-                container('maven') {
-                    // Assuming you have Kubernetes configurations and AWS CLI installed
-                    sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-                    sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"'
-                    sh 'sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl'
-                    sh 'kubectl create namespace java-app'
-                    sh 'kubectl apply -f k8s/sample-java-app-deployment.yaml -n java-app'
-                    sh 'kubectl apply -f k8s/sample-java-app-service.yaml -n java-app'
+                withKubeConfig([namespace: "java-app"]) {
+                    sh 'kubectl apply -f sample-java-app-deployment.yaml'
+                    sh 'kubectl apply -f sample-java-app-service.yaml'
                 }
             }
         }
