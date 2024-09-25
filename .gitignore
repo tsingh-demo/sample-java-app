@@ -18,3 +18,5 @@ target
 
 #VS Code files
 .vscode
+
+*.backup*
