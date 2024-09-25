@@ -59,7 +59,6 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn clean install'
-                    sh 'cp target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar
                 }
             }
         }
