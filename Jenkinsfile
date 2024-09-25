@@ -116,7 +116,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        docker.build("sample-java-app:${env.BUILD_ID}").push("sample-java-app:latest")
+                        docker.build("sample-java-app:latest").push("sample-java-app:latest")
                     }
                 }
             }
