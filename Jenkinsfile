@@ -41,7 +41,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 container('maven') {
-                    git credentialsId: 'tsingh.devops-github', url: 'https://github.com/tsingh-PIP/sample-java-app.git'
+                    git credentialsId: 'tsingh.devops-github', branch: 'main', url: 'https://github.com/tsingh-PIP/sample-java-app.git'
                 }
             }
         }
