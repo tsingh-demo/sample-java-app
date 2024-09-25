@@ -112,11 +112,26 @@ pipeline {
           }
         }
 
-        stage('Docker Build & Push') {
+        /*stage('Docker Build & Push') {
             steps {
                 container('docker') {
                     script {
                         docker.build("sample-java-app:latest").push("sample-java-app:latest")
+                    }
+                }
+            }
+        }*/
+
+        stage('Docker Build & Push') {
+            steps {
+                container('docker') {
+                    script {
+                        withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                            sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+                            def image = docker.build("sample-java-app:latest")
+                            image.push("latest")
+                            sh 'docker logout'
+                        }
                     }
                 }
             }
