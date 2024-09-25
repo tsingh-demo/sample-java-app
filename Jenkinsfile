@@ -20,6 +20,9 @@ pipeline {
                 command:
                 - cat
                 tty: true
+                volumeMounts:
+                - name: docker-sock
+                  mountPath: /var/run/docker.sock
               volumes:
               - name: maven-cache
                 emptyDir: {}
