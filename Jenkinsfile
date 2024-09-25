@@ -49,6 +49,7 @@ pipeline {
         SONARQUBE_CREDENTIALS_ID = 'sonarqube-credentials' // SonarQube credentials
         ARTIFACTORY_URL = 'https://<your-artifactory-url>' // JFrog Artifactory URL
         AWS_CREDENTIALS = 'aws_keys'
+        DOCKER_IMAGE = "tushar3569/sample-java-app:latest"
     }
 
     stages {
@@ -126,9 +127,12 @@ pipeline {
 
         stage('Deploy to Cloud') {
             steps {
-                withKubeConfig([namespace: "devops-tools"]) {
-                    sh 'kubectl apply -f sample-java-app-deployment.yaml'
-                    sh 'kubectl apply -f sample-java-app-service.yaml'
+                container('kubectl'){
+                    sh """
+                        kubectl set image deployment/sample-java-app java-app-container=${DOCKER_IMAGE}
+                        kubectl apply -f sample-java-app-deployment.yaml
+                        kubectl apply -f sample-java-app-service.yaml
+                    """
                 }
             }
         }
