@@ -119,14 +119,16 @@ pipeline {
             }
         }
 
-        /*stage('Deploy to Cloud') {
+        stage('Deploy to Cloud') {
             steps {
                 container('maven') {
                     // Assuming you have Kubernetes configurations and AWS CLI installed
-                    sh 'kubectl apply -f k8s-deployment.yaml'
+                    sh 'kubectl create namespace java-app'
+                    sh 'kubectl apply -f k8s/sample-java-app-deployment.yaml -n java-app'
+                    sh 'kubectl apply -f k8s/sample-java-app-service.yaml -n java-app'
                 }
             }
-        }*/
+        }
     }
 
     post {
