@@ -27,6 +27,11 @@ pipeline {
                   mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
                   mountPath: /var/run/docker.sock
+              - name: kubectl
+                image: bitnami/kubectl:latest
+                command:
+                - cat
+                tty: true
               volumes:
               - name: shared-workspace
                 emptyDir: {}  # An empty directory for sharing data between containers
@@ -121,7 +126,7 @@ pipeline {
 
         stage('Deploy to Cloud') {
             steps {
-                container('maven') {
+                container('kubectl') {
                     // Assuming you have Kubernetes configurations and AWS CLI installed
                     sh 'kubectl create namespace java-app'
                     sh 'kubectl apply -f k8s/sample-java-app-deployment.yaml -n java-app'
