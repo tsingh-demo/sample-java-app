@@ -95,7 +95,7 @@ pipeline {
           steps{
             withAWS(credentials:'aws_keys', region:'us-west-2') {
             s3Upload(
-              file: "target/*.jar",
+              file: "target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar",
               bucket: 'td-sample-java-app',
               path: ''
               )
