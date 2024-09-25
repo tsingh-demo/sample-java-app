@@ -126,7 +126,7 @@ pipeline {
 
         stage('Deploy to Cloud') {
             steps {
-                withKubeConfig([namespace: "java-app"]) {
+                withKubeConfig([namespace: "devops-tools"]) {
                     sh 'kubectl apply -f sample-java-app-deployment.yaml'
                     sh 'kubectl apply -f sample-java-app-service.yaml'
                 }
