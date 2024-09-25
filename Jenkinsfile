@@ -92,14 +92,6 @@ pipeline {
             }
         }*/
 
-        /*stage('Publish Artifacts') {
-            steps {
-                container('maven') {
-                    sh "curl -u ${DOCKER_CREDENTIALS_ID} -T target/myapp.jar ${ARTIFACTORY_URL}/my-repo/myapp.jar"
-                }
-            }
-        }*/
-
         stage('Artifacts Upload'){
           steps{
             withAWS(credentials:'aws_keys', region:'us-west-2') {
@@ -112,23 +104,13 @@ pipeline {
           }
         }
 
-        /*stage('Docker Build & Push') {
-            steps {
-                container('docker') {
-                    script {
-                        docker.build("sample-java-app:latest").push("sample-java-app:latest")
-                    }
-                }
-            }
-        }*/
-
         stage('Docker Build & Push') {
             steps {
                 container('docker') {
                     script {
                         withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
-                            def image = docker.build("tushar3569/td-java-app:latest")
+                            def image = docker.build("tushar3569/sample-java-app:latest")
                             image.push("latest")
                             sh 'docker logout'
                         }
