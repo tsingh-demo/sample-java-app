@@ -68,7 +68,7 @@ pipeline {
                 container('maven') {
                     sh 'mvn test'
                     junit '**/target/surefire-reports/*.xml'
-                    publishHTML([reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Report'])
+                    publishHTML([reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Report',keepAll: 'true',alwaysLinkToLastBuild: 'true', allowMissing: 'false'])
                 }
             }
         }
