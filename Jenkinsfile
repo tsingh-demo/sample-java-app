@@ -36,7 +36,7 @@ pipeline {
                 emptyDir: {}
               - name: kubectl-cli
                 hostpath:
-                  path: /usr/local/bin/kubectl 
+                  path: /usr/local/bin/kubectl
               - name: docker-sock
                 hostPath:
                   path: /var/run/docker.sock
