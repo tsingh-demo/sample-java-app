@@ -29,6 +29,9 @@ pipeline {
                   mountPath: /var/run/docker.sock
               - name: kubectl
                 image: bitnami/kubectl:latest
+                env:
+                - name: JAVA_OPTS
+                  value: "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
                 command:
                 - cat
                 tty: true
