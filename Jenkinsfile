@@ -29,10 +29,6 @@ pipeline {
                   mountPath: /var/run/docker.sock
                 - name: kubectl-cli
                   mountpath: /usr/local/bin/kubectl
-              - name: kubectl
-                image: bitnami/kubectl:latest
-                - cat
-                tty: true
               volumes:
               - name: shared-workspace
                 emptyDir: {}  # An empty directory for sharing data between containers
