@@ -23,11 +23,16 @@ pipeline {
                 - cat
                 tty: true
                 volumeMounts:
+                - name: kubectl
+                  mouthpath: /usr/local/bin/kubectl
                 - name: shared-workspace
                   mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
                   mountPath: /var/run/docker.sock
               volumes:
+              - name: kubectl
+                hostpath:
+                  path: /usr/local/bin/kubectl
               - name: shared-workspace
                 emptyDir: {}  # An empty directory for sharing data between containers
               - name: maven-cache
