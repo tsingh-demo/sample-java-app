@@ -27,12 +27,10 @@ pipeline {
                   mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
                   mountPath: /var/run/docker.sock
+                - name: kubectl-cli
+                  mountpath: /usr/local/bin/kubectl
               - name: kubectl
                 image: bitnami/kubectl:latest
-                env:
-                - name: JAVA_OPTS
-                  value: "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
-                command:
                 - cat
                 tty: true
               volumes:
@@ -40,6 +38,9 @@ pipeline {
                 emptyDir: {}  # An empty directory for sharing data between containers
               - name: maven-cache
                 emptyDir: {}
+              - name: kubectl-cli
+                hostpath:
+                  path: /usr/local/bin/kubectl 
               - name: docker-sock
                 hostPath:
                   path: /var/run/docker.sock
