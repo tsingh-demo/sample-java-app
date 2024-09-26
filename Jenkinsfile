@@ -27,16 +27,11 @@ pipeline {
                   mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
                   mountPath: /var/run/docker.sock
-                - name: kubectl-cli
-                  mountpath: /usr/local/bin/kubectl
               volumes:
               - name: shared-workspace
                 emptyDir: {}  # An empty directory for sharing data between containers
               - name: maven-cache
                 emptyDir: {}
-              - name: kubectl-cli
-                hostpath:
-                  path: /usr/local/bin/kubectl
               - name: docker-sock
                 hostPath:
                   path: /var/run/docker.sock
