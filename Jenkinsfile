@@ -53,7 +53,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Code') {
+        /*stage('Checkout Code') {
             steps {
                 container('maven') {
                     git credentialsId: 'tsingh.devops-github', branch: 'main', url: 'https://github.com/tsingh-PIP/sample-java-app.git'
@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn test'
-                    junit '**/target/surefire-reports/*.xml'
+                    junit '**\/target/surefire-reports/*.xml'
                     publishHTML([reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Report',keepAll: 'true',alwaysLinkToLastBuild: 'true', allowMissing: 'false'])
                 }
             }
@@ -83,12 +83,12 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn jacoco:report'
-                    jacoco(execPattern: '**/target/*.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', exclusionPattern: '**/src/test*')
+                    jacoco(execPattern: '**\/target/*.exec', classPattern: '**\/target/classes', sourcePattern: '**\/src/main/java', exclusionPattern: '**\/src/test*')
                 }
             }
         }
 
-        /*stage('Static Code Analysis') {
+        stage('Static Code Analysis') {
             steps {
                 container('maven') {
                     withSonarQubeEnv('SonarQube') {
@@ -96,7 +96,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
         stage('Artifacts Upload'){
           steps{
@@ -123,15 +123,13 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
         stage('Deploy to Cloud') {
             steps {
                 container('kubectl'){
                     sh """
-                        kubectl set image deployment/sample-java-app java-app-container=${DOCKER_IMAGE}
-                        kubectl apply -f sample-java-app-deployment.yaml
-                        kubectl apply -f sample-java-app-service.yaml
+                        kubectl get pods -n devops-tools
                     """
                 }
             }
