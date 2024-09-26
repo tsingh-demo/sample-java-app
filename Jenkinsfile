@@ -24,7 +24,7 @@ pipeline {
                 tty: true
                 volumeMounts:
                 - name: kubectl
-                  mouthpath: /usr/local/bin/kubectl
+                  mountPath: /usr/local/bin/kubectl
                 - name: shared-workspace
                   mountPath: /workspace  # Mounting shared path in Docker container
                 - name: docker-sock
