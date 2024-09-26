@@ -131,7 +131,7 @@ pipeline {
 
         stage('Deploy to Cloud') {
             steps {
-                container('kubectl'){
+                container('docker'){
                     sh """
                         kubectl get pods -n devops-tools
                     """
