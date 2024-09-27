@@ -131,7 +131,7 @@ pipeline {
             }
         }
 
-        /*stage('Deploy to Cloud') {
+        stage('Deploy to Cloud') {
             steps {
                 container('docker'){
                     sh """
@@ -139,7 +139,7 @@ pipeline {
                     """
                 }
             }
-        }*/
+        }
     }
 
     post {
