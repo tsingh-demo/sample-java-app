@@ -53,7 +53,7 @@ pipeline {
     }
 
     stages {
-        /*stage('Checkout Code') {
+        stage('Checkout Code') {
             steps {
                 container('maven') {
                     git credentialsId: 'tsingh.devops-github', branch: 'main', url: 'https://github.com/tsingh-PIP/sample-java-app.git'
@@ -91,7 +91,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 container('maven') {
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonarqube') {
                         sh 'mvn sonar:sonar'
                     }
                 }
@@ -123,9 +123,9 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
 
-        stage('Deploy to Cloud') {
+        /*stage('Deploy to Cloud') {
             steps {
                 container('docker'){
                     sh """
@@ -133,7 +133,7 @@ pipeline {
                     """
                 }
             }
-        }
+        }*/
     }
 
     post {
