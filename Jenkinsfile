@@ -91,7 +91,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 container('maven') {
-                    withSonarQubeEnv('sonarqube ') {
+                    withSonarQubeEnv('sonar-scanner ') {
                         sh 'mvn sonar:sonar'
                     }
                 }
