@@ -73,7 +73,7 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn test'
-                    junit '**\/target/surefire-reports/*.xml'
+                    junit '**/target/surefire-reports/*.xml'
                     publishHTML([reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Report',keepAll: 'true',alwaysLinkToLastBuild: 'true', allowMissing: 'false'])
                 }
             }
@@ -83,7 +83,7 @@ pipeline {
             steps {
                 container('maven') {
                     sh 'mvn jacoco:report'
-                    jacoco(execPattern: '**\/target/*.exec', classPattern: '**\/target/classes', sourcePattern: '**\/src/main/java', exclusionPattern: '**\/src/test*')
+                    jacoco(execPattern: '**/target/*.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', exclusionPattern: '**/src/test*')
                 }
             }
         }
@@ -91,7 +91,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 container('maven') {
-                    withSonarQubeEnv('sonarqube') {
+                    withSonarQubeEnv('sonarqube ') {
                         sh 'mvn sonar:sonar'
                     }
                 }
