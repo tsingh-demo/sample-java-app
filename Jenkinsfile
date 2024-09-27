@@ -92,7 +92,13 @@ pipeline {
             steps {
                 container('maven') {
                     withSonarQubeEnv('sonarqube') {
-                        sh 'mvn sonar:sonar'
+                        sh """
+                        mvn clean verify sonar:sonar \
+                        -Dsonar.projectKey=sample-java-app \
+                        -Dsonar.projectName='sample-java-app' \
+                        -Dsonar.host.url=http://34.214.75.206:9000 \
+                        -Dsonar.token=sqp_44c0f224984463f010181bfb163beda7f118e501
+                        """
                     }
                 }
             }
